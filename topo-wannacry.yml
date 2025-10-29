@@ -34,6 +34,10 @@ hosts:
     env:
     - name: "VERSION"
       value: "7u"
+    - name: "KVM"
+      value: "N"
+    publish:
+    - "8006:8006"
     postStart:
       - 'curl -L "https://github.com/ytisf/theZoo/raw/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip" -o /data/Ransomware.WannaCry.zip'
     posX: 110.4
@@ -47,6 +51,10 @@ hosts:
     env:
     - name: "VERSION"
       value: "7u"
+    - name: "KVM"
+      value: "N"
+    publish:
+    - "8007:8006"
     posX: 318.1
     posY: 382.0
     group: Vitimas
@@ -57,6 +65,10 @@ hosts:
     env:
     - name: "VERSION"
       value: "7u"
+    - name: "KVM"
+      value: "N"
+    publish:
+    - "8008:8006"
     posX: 442.4
     posY: 382.0
     group: Vitimas
@@ -67,6 +79,10 @@ hosts:
     env:
     - name: "VERSION"
       value: "7u"
+    - name: "KVM"
+      value: "N"
+    publish:
+    - "8009:8006"
     posX: 566.0
     posY: 382.0
     group: Vitimas
@@ -87,3 +103,4 @@ links:
     node2: s1
   - node1: vitima3
     node2: s1
+

@@ -32,7 +32,10 @@ spec:
         ports:
         - containerPort: 8050
         - containerPort: 8181
+        - containerPort: 8006
+        - containerPort: 8007
         - containerPort: 8008
+        - containerPort: 8009
         command: ["/usr/bin/tini", "--", "/bin/sh", "-x", "-c"]
         args: 
         - git clone --branch main https://github.com/FelipeR-UFBA/lab-wannacry.git /tmp/labs;
@@ -88,11 +91,17 @@ spec:
   - port: 8181
     targetPort: 8181
     name: http-kytos
+  - port: 8006
+    targetPort: 8006
+    name: http-NoVNC-Atacante
+  - port: 8007
+    targetPort: 8007
+    name: http-NoVNC-Vitima1
   - port: 8008
     targetPort: 8008
-    name: http-sflow-rt 
-  - port: 5000
-    targetPort: 5000
-    name: http-c2c
+    name: http-NoVNC-Vitima2
+  - port: 8009
+    targetPort: 8009
+    name: http-NoVNC-Vitima3
   selector:
     app: wannacry-lab-${pod_hash}
