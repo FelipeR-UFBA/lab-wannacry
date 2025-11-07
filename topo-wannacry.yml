@@ -1,28 +1,25 @@
 name: Lab WannaCry - TESTE MINIMO (SO ATACANTE)
 settings:
-  sflow_enabled: true
-  sflow_collector: 127.0.0.1:6343
-  sflow_sampling: 64
-  sflow_polling: 10
+  sflow_enabled: true
+  sflow_collector: 127.0.0.1:6343
+  sflow_sampling: 64
+  sflow_polling: 10
 hosts:
-  # Apenas este host será criado. O c1 foi removido.
-  atacante:
-    ip: 192.168.1.100/24
-    kind: k8spod
-    image: dockurr/windows
-    env:
-    - name: "VERSION"
-      value: "7u"
-    - name: "KVM"
-      value: "N"
-    publish:
-    - "8006:8006"
-    postStart:
-      - 'curl -L "https://github.com/ytisf/theZoo/raw/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip" -o /data/Ransomware.WannaCry.zip'
-    posX: 110.4
-    posY: 249.0
-    group: Atacante
-
-# Seções 'switches:' e 'links:' vazias DE PROPÓSITO.
+  atacante:
+    ip: 192.168.1.100/24
+    kind: k8spod
+    image: dockurr/windows
+    env:
+    - name: "VERSION"
+      value: "7u"
+    - name: "KVM"
+      value: "N"
+    publish:
+    - "8006:8006"
+    postStart:
+      - 'curl -L "https://github.com/ytisf/theZoo/raw/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip" -o /data/Ransomware.WannaCry.zip'
+    posX: 110.4
+    posY: 249.0
+    group: Atacante
 switches: {}
 links: []
