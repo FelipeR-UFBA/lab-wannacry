@@ -1,32 +1,10 @@
-name: Lab WannaCry
+name: Lab WannaCry - TESTE MINIMO (SO ATACANTE)
 settings:
   sflow_enabled: true
   sflow_collector: 127.0.0.1:6343
   sflow_sampling: 64
   sflow_polling: 10
 hosts:
-  # 1. O Controlador SDN (Kytos)
-  c1:
-    kind: k8spod
-    image: hackinsdn/kytos:allinone
-    args:
-    - "-E"
-    env:
-    - name: "MONGO_USERNAME"
-      value: "kytos"
-    - name: "MONGO_PASSWORD"
-      value: "kytos"
-    - name: "MONGO_DBNAME"
-      value: "kytos"
-    - name: "MONGO_HOST_SEEDS"
-      value: "127.0.0.1:27017"
-    publish:
-    - "6653:6653"
-    - "8181:8181"
-    posX: 443.8
-    posY: 123.5
-    group: HackInSDN.com
-  # 2. O "Atacante" (Paciente Zero) - Windows 7
   atacante:
     ip: 192.168.1.100/24
     kind: k8spod
@@ -43,64 +21,7 @@ hosts:
     posX: 110.4
     posY: 249.0
     group: Atacante
-  # 3. As Vítimas (Hosts Vulneráveis) - Windows 7
-  vitima1:
-    ip: 192.168.1.101/24
-    kind: k8spod
-    image: dockurr/windows
-    env:
-    - name: "VERSION"
-      value: "7u"
-    - name: "KVM"
-      value: "N"
-    publish:
-    - "8007:8006"
-    posX: 318.1
-    posY: 382.0
-    group: Vitimas
-  vitima2:
-    ip: 192.168.1.102/24
-    kind: k8spod
-    image: dockurr/windows
-    env:
-    - name: "VERSION"
-      value: "7u"
-    - name: "KVM"
-      value: "N"
-    publish:
-    - "8008:8006"
-    posX: 442.4
-    posY: 382.0
-    group: Vitimas
-  vitima3:
-    ip: 192.168.1.103/24
-    kind: k8spod
-    image: dockurr/windows
-    env:
-    - name: "VERSION"
-      value: "7u"
-    - name: "KVM"
-      value: "N"
-    publish:
-    - "8009:8006"
-    posX: 566.0
-    posY: 382.0
-    group: Vitimas
-switches:
-  s1:
-    kind: ovs
-    group: HackInSDN.com
-    posX: 380.0
-    posY: 248.4
-links:
-  - node1: c1
-    node2: s1
-  - node1: atacante
-    node2: s1
-  - node1: vitima1
-    node2: s1
-  - node1: vitima2
-    node2: s1
-  - node1: vitima3
-    node2: s1
+
+switches: {}
+links: []
 
