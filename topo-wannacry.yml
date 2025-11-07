@@ -17,7 +17,7 @@ hosts:
     publish:
     - "8006:8006"
     postStart:
-      - 'curl -L "https://github.com/ytisf/theZoo/raw/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip" -o /data/Ransomware.WannaCry.zip'
+    - 'sh -c "curl -L ''https://github.com/ytisf/theZoo/raw/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip'' -o /data/Ransomware.WannaCry.zip"'
     posX: 110.4
     posY: 249.0
     group: Atacante
