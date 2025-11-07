@@ -40,11 +40,11 @@ spec:
         args: 
         - git clone --branch main https://github.com/FelipeR-UFBA/lab-wannacry.git /tmp/labs;
           mkdir -p /root/labs/;
-          mv /tmp/labs/topo-teste.yml /root/labs/topo-teste.yml;
+          mv /tmp/labs/topo-wannacry.yml /root/labs/topo-wannacry.yml;
           rm -rf /tmp/labs;
           cd /root/labs/;
           service openvswitch-switch start;
-          tmux new-sess -d -s mnsec mnsec --topofile topo-teste.yml;
+          tmux new-sess -d -s mnsec mnsec --topofile topo-wannacry.yml;
           sleep infinity;
         workingDir: /root/labs/
         env: 
