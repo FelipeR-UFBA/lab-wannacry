@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Felipe-lab-${pod_hash}
+  name: felipe-lab-${pod_hash}
   labels:
-    app: Felipe-lab-${pod_hash}
+    app: felipe-lab-${pod_hash}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Felipe-lab-${pod_hash}
+      app: felipe-lab-${pod_hash}
   template:
     metadata:
-      name: Felipe-lab-${pod_hash}
+      name: felipe-lab-${pod_hash}
       labels:
-        app: Felipe-lab-${pod_hash}
+        app: felipe-lab-${pod_hash}
       annotations:
         container.apparmor.security.beta.kubernetes.io/mininet-sec: unconfined
     spec:
@@ -38,47 +38,64 @@ spec:
         - containerPort: 8008 # VNC Vitima2
         - containerPort: 8009 # VNC Vitima3
         command: ["/usr/bin/tini", "--", "/bin/sh", "-x", "-c"]
-        args: 
-        # 1. Clona o repositório (COM A URL ATUALIZADA)
-        - git clone --branch main https://github.com/FelipeR-UFBA/lab-ransomware.git /root/labs;
-          cd /root/labs/;
-        # 2. Permissão de exec
-          chmod +x launcher.sh;
-        # 3. Executa o launcher
-          ./launcher.sh;
+        args:
+        - "git clone --branch main https://github.com/FelipeR-UFBA/lab-ransomware.git /root/labs; cd /root/labs/; chmod +x launcher.sh; ./launcher.sh;"
         workingDir: /root/labs/
         env: 
         - name: K8S_POD_HASH
           value: ${pod_hash}
         - name: K8S_NODE_AFFINITY
           value: ${allowed_nodes_str}
-        - {name: K8S_PROXY_CERT_FILE, value: /usr/local/etc/mnsec-proxy-ca.crt}
-        - {name: K8S_PROXY_HOST, value: mnsec-proxy-service.hackinsdn.svc.cnacv5}
+        - name: K8S_PROXY_CERT_FILE
+          value: /usr/local/etc/mnsec-proxy-ca.crt
+        - name: K8S_PROXY_HOST
+          value: mnsec-proxy-service.hackinsdn.svc.cnacv5
         securityContext:
           capabilities:
             add: ["NET_ADMIN", "SYS_MODULE", "SYS_ADMIN"]
         volumeMounts:
-        - {name: lib-modules, mountPath: /lib/modules}
-        - {name: mnsec-proxy-ca-volume, mountPath: /usr/local/etc/mnsec-proxy-ca.crt, readOnly: true, subPath: ca.crt}
+        - name: lib-modules
+          mountPath: /lib/modules
+        - name: mnsec-proxy-ca-volume
+          mountPath: /usr/local/etc/mnsec-proxy-ca.crt
+          readOnly: true
+          subPath: ca.crt
       volumes:
-      - {name: lib-modules, hostPath: {path: /lib/modules, type: Directory}}
-      - {name: mnsec-proxy-ca-volume, configMap: {defaultMode: 0600, name: mnsec-proxy-ca-configmap}}
+      - name: lib-modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: mnsec-proxy-ca-volume
+        configMap:
+          defaultMode: 0600
+          name: mnsec-proxy-ca-configmap
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: Felipe-lab-${pod_hash}
+  name: felipe-lab-${pod_hash}
   labels:
-    app: Felipe-lab-${pod_hash}
+    app: felipe-lab-${pod_hash}
 spec:
   type: NodePort
   ports:
-  - {port: 8050, targetPort: 8050, name: http-mininet-sec}
-  - {port: 8181, targetPort: 8181, name: http-kytos}
-  - {port: 8006, targetPort: 8006, name: vnc-atacante}
-  - {port: 8007, targetPort: 8007, name: vnc-vitima1}
-  - {port: 8008, targetPort: 8008, name: vnc-vitima2}
-  - {port: 8009, targetPort: 8009, name: vnc-vitima3}
+  - port: 8050
+    targetPort: 8050
+    name: http-mininet-sec
+  - port: 8181
+    targetPort: 8181
+    name: http-kytos
+  - port: 8006
+    targetPort: 8006
+    name: vnc-atacante
+  - port: 8007
+    targetPort: 8007
+    name: vnc-vitima1
+  - port: 8008
+    targetPort: 8008
+    name: vnc-vitima2
+  - port: 8009
+    targetPort: 8009
+    name: vnc-vitima3
   selector:
-    app: Felipe-lab-${pod_hash}
+    app: felipe-lab-${pod_hash}
