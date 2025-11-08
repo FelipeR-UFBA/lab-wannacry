@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # URL base do meu repositório (para baixar os cenários)
-BASE_URL="https://raw.githubusercontent.com/FelipeR-UFBA/lab-wannacry/main"
+BASE_URL="https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main"
 
 # Função para limpar processos antigos
 cleanup() {
@@ -13,7 +13,7 @@ cleanup() {
   echo "[OK] Limpeza concluída."
 }
 
-# "Trap" para capturar sinais de desligamento (SIGTERM do K8s)
+# Trap para capturar sinais de desligamento (SIGTERM do K8s)
 trap cleanup SIGINT SIGTERM
 
 # Limpa qualquer processo fantasma antes de começar
@@ -74,7 +74,7 @@ echo "Qual cenário você gostaria de executar?"
 echo ""
 echo "  [A] Cenário A: WannaCry Completo (Windows - Falha Esperada de Rede)"
 echo "  [B] Cenário B: WannaCry Mínimo (Windows - Teste de Diagnóstico)"
-echo "  [C] Cenário C: SambaCry (Plano B - Linux - **PENDENTE**)"
+echo "  [C] Cenário C: Linux Ransomware"
 echo "  [q] Sair (Apenas ficar no terminal)"
 echo ""
 
@@ -93,7 +93,7 @@ while true; do
       ;;
     [Cc])
       CENARIO_FILE="cenario-C.yml"
-      DESC="Cenário C: SambaCry (Linux)"
+      DESC="Cenário C: Linux Ransomware"
       break
       ;;
     [Qq])
