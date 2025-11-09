@@ -1,4 +1,6 @@
-name: Lab WannaCry - TESTE MINIMO (SO ATACANTE)
+# Cenário B: Simulação mínima para diagnóstico de rede e teste de boot da imagem Windows.
+
+name: Lab WannaCry - TESTE MINIMO (SO O ATACANTE)
 settings:
   sflow_enabled: true
   sflow_collector: 127.0.0.1:6343
@@ -17,7 +19,7 @@ hosts:
     publish:
     - "8006:8006"
     postStart:
-    - 'sh -c "curl -L ''https://github.com/ytisf/theZoo/raw/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip'' -o /data/Ransomware.WannaCry.zip"'
+      - 'sh -c "mkdir -p /data && curl -fsSL --retry 3 --connect-timeout 10 -o /data/Ransomware.WannaCry.zip https://raw.githubusercontent.com/ytisf/theZoo/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip || true"'
     posX: 110.4
     posY: 249.0
     group: Atacante
