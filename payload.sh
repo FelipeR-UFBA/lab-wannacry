@@ -1,12 +1,14 @@
-#!/bin/bash
-# Prova de conceito.
-# Ele cria uma nota de resgate no diretório /home.
 
-echo "------------------------------------" > /home/RESGATE.txt
-echo "OLA, O SEU SISTEMA FOI COMPROMETIDO!" >> /home/RESGATE.txt
-echo "" >> /home/RESGATE.txt
-echo "NÃO GRITA" >> /home/RESGATE.txt
-echo "O seu serviço Samba estava vulnerável ao CVE-2017-7494, você vai precisar comer merda na frente da webcam pra recuperar seus arquivos. Tem 24H!" >> /home/RESGATE.txt
+TARGET_DIR="/home/sambacry"
+FILE_NAME="LEIA_ME_SEUS_FICHEIROS_FORAM_CIFRADOS.txt"
+FULL_PATH="$TARGET_DIR/$FILE_NAME"
+
+echo "------------------------------------" > "$FULL_PATH"
+echo "OLA, O SEU SISTEMA FOI COMPROMETIDO!" >> "$FULL_PATH"
+echo "" >> "$FULL_PATH"
+echo "Isto é uma prova de conceito para o lab HackInSDN." >> "$FULL_PATH"
+echo "O seu serviço Samba estava vulnerável ao CVE-2017-7494 (SambaCry)." >> "$FULL_PATH"
 echo "------------------------------------"
 
-chmod 777 /home/RESGATE.txt
+
+chmod 777 "$FULL_PATH"
