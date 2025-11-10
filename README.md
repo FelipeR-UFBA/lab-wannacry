@@ -1,2 +1,2 @@
-# lab-wannacry
-Arquivos de topologia para o laboratório WannaCry na plataforma HackInSDN.
+# Lab-Ransomware
+Laboratório em etapa de validação...
