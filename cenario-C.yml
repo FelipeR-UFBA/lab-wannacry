@@ -27,7 +27,7 @@ hosts:
     kind: k8spod
     image: hackinsdn/debian:latest
     postStart:
-      - 'sh -c "set -e; export DEBIAN_FRONTEND=noninteractive; apt-get update && apt-get install -y python3 python3-pip curl || true; pip3 install --no-cache-dir impacket || true; mkdir -p /root && curl -fsSL --retry 3 --connect-timeout 10 -o /root/exploit-br.py https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main/red-wheelbarrow.py || true; curl -fsSL --retry 3 --connect-timeout 10 -o /root/payload.sh https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main/payload.sh || true; chmod +x /root/payload.sh || true"'
+      - 'sh -c "set -e; export DEBIAN_FRONTEND=noninteractive; apt-get update && apt-get install -y python3 python3-pip curl || true; pip3 install --no-cache-dir impacket || true; mkdir -p /root && curl -fsSL --retry 3 --connect-timeout 10 -o /root/red-wheelbarrow.py https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main/red-wheelbarrow.py || true; curl -fsSL --retry 3 --connect-timeout 10 -o /root/payload.sh https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main/payload.sh || true; chmod +x /root/payload.sh || true"'
     posX: 110.4
     posY: 249.0
     group: Atacante
