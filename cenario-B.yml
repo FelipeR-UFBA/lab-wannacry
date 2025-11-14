@@ -15,7 +15,7 @@ hosts:
     publish: ["8006:8080"]
     
     env:
-    - {name: "VERSION", value: "7u"}
+    - {name: "VERSION", value: "xp"}
     - {name: "KVM", value: "N"}
     - {name: "VNC", value: "true"}
     - {name: "WEB_VNC", value: "true"}
