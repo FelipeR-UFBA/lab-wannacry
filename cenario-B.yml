@@ -11,13 +11,15 @@ hosts:
     ip: 192.168.1.100/24
     kind: k8spod
     image: dockurr/windows
-    env:
-    - name: "VERSION"
-      value: "7u"
-    - name: "KVM"
-      value: "N"
+    isolateControlNet: false
     publish:
-    - "8006:8006"
+      - "8006:8080"
+    
+    environment: 
+      - VERSION=7u
+      - KVM=N
+      - VNC=true
+      - WEB_VNC=true
     postStart:
       - 'sh -c "mkdir -p /data && curl -fsSL --retry 3 --connect-timeout 10 -o /data/Ransomware.WannaCry.zip https://raw.githubusercontent.com/ytisf/theZoo/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip || true"'
     posX: 110.4
