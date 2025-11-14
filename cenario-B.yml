@@ -12,7 +12,7 @@ hosts:
     kind: k8spod
     image: dockurr/windows
     isolateControlNet: false
-    publish: ["8006:8080"]
+    publish: ["8006:5900"]
     
     env:
     - {name: "VERSION", value: "xp"}
