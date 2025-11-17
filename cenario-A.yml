@@ -6,6 +6,7 @@ settings:
   sflow_polling: 10
 
 hosts:
+
   # Controlador SDN (Kytos)
   c1:
     kind: k8spod
@@ -13,14 +14,10 @@ hosts:
     args:
       - "-E"
     env:
-      - name: "MONGO_USERNAME"
-        value: "kytos"
-      - name: "MONGO_PASSWORD"
-        value: "kytos"
-      - name: "MONGO_DBNAME"
-        value: "kytos"
-      - name: "MONGO_HOST_SEEDS"
-        value: "127.0.0.1:27017"
+      - {name: "MONGO_USERNAME", value: "kytos"}
+      - {name: "MONGO_PASSWORD", value: "kytos"}
+      - {name: "MONGO_DBNAME", value: "kytos"}
+      - {name: "MONGO_HOST_SEEDS", value: "127.0.0.1:27017"}
     publish:
       - "6653:6653"
       - "8181:8181"
@@ -28,66 +25,86 @@ hosts:
     posY: 123.5
     group: HackInSDN.com
 
-  # Atacante (Paciente Zero) - Windows 7
+  # Atacante
   atacante:
     ip: 192.168.1.100/24
     kind: k8spod
     image: dockurr/windows
-    env:
-      - name: "VERSION"
-        value: "7u"
-      - name: "KVM"
-        value: "N"
+    isolateControlNet: false
+
     publish:
+      - "5901:5900"
       - "8006:8006"
+
+    env:
+      - {name: "VERSION", value: "7u"}
+      - {name: "KVM", value: "N"}
+      - {name: "VNC", value: "true"}
+      - {name: "WEB_VNC", value: "true"}
+
     postStart:
       - 'sh -c "mkdir -p /data && curl -fsSL --retry 3 --connect-timeout 10 -o /data/Ransomware.WannaCry.zip https://raw.githubusercontent.com/ytisf/theZoo/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip || true"'
+
     posX: 110.4
     posY: 249.0
     group: Atacante
 
-  # Vítimas (Windows 7 vulneráveis)
+  # Vítima 1
   vitima1:
     ip: 192.168.1.101/24
     kind: k8spod
     image: dockurr/windows
-    env:
-      - name: "VERSION"
-        value: "7u"
-      - name: "KVM"
-        value: "N"
+
     publish:
+      - "5902:5900"
       - "8007:8006"
+
+    env:
+      - {name: "VERSION", value: "7u"}
+      - {name: "KVM", value: "N"}
+      - {name: "VNC", value: "true"}
+      - {name: "WEB_VNC", value: "true"}
+
     posX: 318.1
     posY: 382.0
     group: Vitimas
 
+  # Vítima 2
   vitima2:
     ip: 192.168.1.102/24
     kind: k8spod
     image: dockurr/windows
-    env:
-      - name: "VERSION"
-        value: "7u"
-      - name: "KVM"
-        value: "N"
+
     publish:
+      - "5903:5900"
       - "8008:8006"
+
+    env:
+      - {name: "VERSION", value: "7u"}
+      - {name: "KVM", value: "N"}
+      - {name: "VNC", value: "true"}
+      - {name: "WEB_VNC", value: "true"}
+
     posX: 442.4
     posY: 382.0
     group: Vitimas
 
+  # Vítima 3
   vitima3:
     ip: 192.168.1.103/24
     kind: k8spod
     image: dockurr/windows
-    env:
-      - name: "VERSION"
-        value: "7u"
-      - name: "KVM"
-        value: "N"
+
     publish:
+      - "5904:5900"
       - "8009:8006"
+
+    env:
+      - {name: "VERSION", value: "7u"}
+      - {name: "KVM", value: "N"}
+      - {name: "VNC", value: "true"}
+      - {name: "WEB_VNC", value: "true"}
+
     posX: 566.0
     posY: 382.0
     group: Vitimas
