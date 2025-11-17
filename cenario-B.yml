@@ -6,23 +6,30 @@ settings:
   sflow_collector: 127.0.0.1:6343
   sflow_sampling: 64
   sflow_polling: 10
+
 hosts:
   atacante:
     ip: 192.168.1.100/24
     kind: k8spod
     image: dockurr/windows
     isolateControlNet: false
-    publish: ["8006:8006"]
-    
+
+
+    publish: ["8006:5900"]
+
     env:
-    - {name: "VERSION", value: "xp"}
-    - {name: "KVM", value: "N"}
-    - {name: "VNC", value: "true"}
-    - {name: "WEB_VNC", value: "true"}
+      - {name: "VERSION", value: "xp"}
+      - {name: "KVM", value: "N"}
+      - {name: "VNC", value: "true"}
+      - {name: "WEB_VNC", value: "true"}
+
     postStart:
       - 'sh -c "mkdir -p /data && curl -fsSL --retry 3 --connect-timeout 10 -o /data/Ransomware.WannaCry.zip https://raw.githubusercontent.com/ytisf/theZoo/master/malware/Binaries/Ransomware.WannaCry/Ransomware.WannaCry.zip || true"'
+
     posX: 110.4
     posY: 249.0
     group: Atacante
+
 switches: {}
 links: []
+
