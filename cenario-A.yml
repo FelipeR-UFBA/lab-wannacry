@@ -34,7 +34,7 @@ hosts:
 
     publish:
       - "5901:5900"
-      - "8006:8006"
+      - "8006:5900"     
 
     env:
       - {name: "VERSION", value: "7u"}
@@ -57,7 +57,7 @@ hosts:
 
     publish:
       - "5902:5900"
-      - "8007:8006"
+      - "8007:5900"     
 
     env:
       - {name: "VERSION", value: "7u"}
@@ -77,7 +77,7 @@ hosts:
 
     publish:
       - "5903:5900"
-      - "8008:8006"
+      - "8008:5900"     
 
     env:
       - {name: "VERSION", value: "7u"}
@@ -97,7 +97,7 @@ hosts:
 
     publish:
       - "5904:5900"
-      - "8009:8006"
+      - "8009:5900"     
 
     env:
       - {name: "VERSION", value: "7u"}
