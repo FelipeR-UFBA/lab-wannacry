@@ -24,6 +24,16 @@ trap cleanup SIGINT SIGTERM
 # Limpa qualquer processo fantasma antes de começar
 cleanup
 
+#Inicialização do OVS
+log "[INFO] Inicializando Open vSwitch..."
+service openvswitch-switch start || true
+
+log "[INFO] Reiniciando OVSDB..."
+/usr/share/openvswitch/scripts/ovs-ctl stop || true
+/usr/share/openvswitch/scripts/ovs-ctl start || true
+
+sleep 2
+
 # O Pato <- é literalmente só um pato, não vou elaborar.
 clear
 cat <<'EOF'
