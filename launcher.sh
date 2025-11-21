@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-# URL base 
+# URL base (isso é um teste.) 
 BASE_URL="https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main"
 MENU_FILE="menu.sh"
 
