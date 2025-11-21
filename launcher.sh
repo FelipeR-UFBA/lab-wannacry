@@ -8,6 +8,15 @@ MENU_FILE="menu.sh"
 clear
 echo "[$(date +%FT%T)] [INFO] Iniciando Lançador Dinâmico..."
 
+#inicialização do OVS
+echo "[$(date +%FT%T)] [INFO] Inicializando serviço Open vSwitch..."
+service openvswitch-switch start || true
+
+echo "[$(date +%FT%T)] [INFO] Inicializando OVSDB..."
+/usr/share/openvswitch/scripts/ovs-ctl start || true
+
+sleep 2
+
 # Verifica a dependência 'curl'
 if ! command -v curl >/dev/null 2>&1; then
   echo "[$(date +%FT%T)] [ERRO] CRÍTICO: 'curl' não encontrado."
