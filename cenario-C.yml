@@ -38,9 +38,7 @@ hosts:
     ip: 192.168.1.101/24
     mac: "5a:86:c6:e5:10:2f"
     kind: k8spod
-    image: vulnerables/cve-2017-7494
-    postStart:
-      - 'sh -c "apk update && apk add net-tools iproute2"'
+    image: feliperosario/cve-2017-7494-fixed:latest
     posX: 318.1
     posY: 382.0
     group: Vitimas
@@ -49,9 +47,7 @@ hosts:
     ip: 192.168.1.102/24
     mac: "5a:86:c6:e5:10:3f"
     kind: k8spod
-    image: vulnerables/cve-2017-7494
-    postStart:
-      - 'sh -c "apk update && apk add net-tools iproute2"'
+    image: feliperosario/cve-2017-7494-fixed:latest
     posX: 442.4
     posY: 382.0
     group: Vitimas
