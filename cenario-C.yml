@@ -1,4 +1,4 @@
-name: Lab Linux Ransomware - Cenario C
+name: Lab Linux Ransomware - Cenario C 
 settings:
   sflow_enabled: true
   sflow_collector: 127.0.0.1:6343
@@ -29,16 +29,14 @@ hosts:
     kind: k8spod
     image: hackinsdn/debian:latest
     postStart:
-      - >
-        sh -c "set -e;
-        export DEBIAN_FRONTEND=noninteractive;
-        apt-get update &&
-        apt-get install -y python3 python3-pip curl &&
-        pip3 install impacket &&
-        mkdir -p /root &&
-        curl -fsSL -o /root/red-wheelbarrow.py https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main/red-wheelbarrow.py &&
-        curl -fsSL -o /root/payload.sh https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main/payload.sh &&
-        chmod +x /root/payload.sh"
+      - 'sh -c "ip route add default dev atacante-eth0 || true"'
+      - 'sh -c "set -e; export DEBIAN_FRONTEND=noninteractive; apt-get update &&
+                 apt-get install -y python3 python3-pip curl || true;
+                 pip3 install --no-cache-dir impacket || true;
+                 mkdir -p /root &&
+                 curl -fsSL --retry 3 --connect-timeout 10 -o /root/red-wheelbarrow.py https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main/red-wheelbarrow.py || true;
+                 curl -fsSL --retry 3 --connect-timeout 10 -o /root/payload.sh https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main/payload.sh || true;
+                 chmod +x /root/payload.sh || true"'
     posX: 110.4
     posY: 249.0
     group: Atacante
@@ -48,6 +46,8 @@ hosts:
     mac: "5a:86:c6:e5:10:2f"
     kind: k8spod
     image: feliperosario/cve-2017-7494-fixed:latest
+    postStart:
+      - 'sh -c "ip route add default dev vitima1-eth0 || true"'
     posX: 318.1
     posY: 382.0
     group: Vitimas
@@ -55,8 +55,9 @@ hosts:
   vitima2:
     ip: 192.168.1.102/24
     mac: "5a:86:c6:e5:10:3f"
-    kind: k8spod
-    image: feliperosario/cve-2017-7494-fixed:latest
+    kind: k8spelled/cve-2017-7494-fixed:latest
+    postStart:
+      - 'sh -c "ip route add default dev vitima2-eth0 || true"'
     posX: 442.4
     posY: 382.0
     group: Vitimas
@@ -77,4 +78,5 @@ links:
     node2: s1
   - node1: vitima2
     node2: s1
+
 
