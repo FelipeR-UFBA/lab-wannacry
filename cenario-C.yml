@@ -37,9 +37,10 @@ hosts:
   vitima1:
     ip: 192.168.1.101/24
     mac: "5a:86:c6:e5:10:2f"
-    cmd: "apk update && apk add net-tools iproute2"
     kind: k8spod
     image: vulnerables/cve-2017-7494
+    postStart:
+      - 'sh -c "apk update && apk add net-tools iproute2"'
     posX: 318.1
     posY: 382.0
     group: Vitimas
@@ -47,9 +48,10 @@ hosts:
   vitima2:
     ip: 192.168.1.102/24
     mac: "5a:86:c6:e5:10:3f"
-    cmd: "apk update && apk add net-tools iproute2"
     kind: k8spod
     image: vulnerables/cve-2017-7494
+    postStart:
+      - 'sh -c "apk update && apk add net-tools iproute2"'
     posX: 442.4
     posY: 382.0
     group: Vitimas
