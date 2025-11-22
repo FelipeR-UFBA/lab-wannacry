@@ -1,4 +1,4 @@
-name: Lab Linux Ransomware - Cenario C 
+name: Lab Linux Ransomware - Cenario C
 settings:
   sflow_enabled: true
   sflow_collector: 127.0.0.1:6343
@@ -12,10 +12,10 @@ hosts:
     image: hackinsdn/kytos:allinone
     args: ["-E"]
     env:
-      - {name: "MONGO_USERNAME", value: "kytos"}
-      - {name: "MONGO_PASSWORD", value: "kytos"}
-      - {name: "MONGO_DBNAME", value: "kytos"}
-      - {name: "MONGO_HOST_SEEDS", value: "127.0.0.1:27017"}
+      - { name: "MONGO_USERNAME", value: "kytos" }
+      - { name: "MONGO_PASSWORD", value: "kytos" }
+      - { name: "MONGO_DBNAME", value: "kytos" }
+      - { name: "MONGO_HOST_SEEDS", value: "127.0.0.1:27017" }
     publish:
       - "6653:6653"
       - "8181:8181"
@@ -55,7 +55,8 @@ hosts:
   vitima2:
     ip: 192.168.1.102/24
     mac: "5a:86:c6:e5:10:3f"
-    kind: k8spelled/cve-2017-7494-fixed:latest
+    kind: k8spod
+    image: feliperosario/cve-2017-7494-fixed:latest
     postStart:
       - 'sh -c "ip route add default dev vitima2-eth0 || true"'
     posX: 442.4
@@ -78,5 +79,3 @@ links:
     node2: s1
   - node1: vitima2
     node2: s1
-
-
