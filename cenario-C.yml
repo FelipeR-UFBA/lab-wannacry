@@ -11,6 +11,8 @@ hosts:
     kind: k8spod
     image: hackinsdn/kytos:allinone
     args: ["-E"]
+    interfaces:
+      - name: c1-eth0
     env:
       - {name: "MONGO_USERNAME", value: "kytos"}
       - {name: "MONGO_PASSWORD", value: "kytos"}
@@ -28,6 +30,8 @@ hosts:
     mac: "5a:86:c6:e5:10:1f"
     kind: k8spod
     image: hackinsdn/debian:latest
+    interfaces:
+      - name: atacante-eth0
     postStart:
       - 'sh -c "set -e; export DEBIAN_FRONTEND=noninteractive; apt-get update && apt-get install -y python3 python3-pip curl || true; pip3 install --no-cache-dir impacket || true; mkdir -p /root && curl -fsSL --retry 3 --connect-timeout 10 -o /root/red-wheelbarrow.py https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main/red-wheelbarrow.py || true; curl -fsSL --retry 3 --connect-timeout 10 -o /root/payload.sh https://raw.githubusercontent.com/FelipeR-UFBA/lab-ransomware/main/payload.sh || true; chmod +x /root/payload.sh || true"'
     posX: 110.4
@@ -39,6 +43,8 @@ hosts:
     mac: "5a:86:c6:e5:10:2f"
     kind: k8spod
     image: feliperosario/cve-2017-7494-fixed:latest
+    interfaces:
+      - name: vitima1-eth0
     posX: 318.1
     posY: 382.0
     group: Vitimas
@@ -48,6 +54,8 @@ hosts:
     mac: "5a:86:c6:e5:10:3f"
     kind: k8spod
     image: feliperosario/cve-2017-7494-fixed:latest
+    interfaces:
+      - name: vitima2-eth0
     posX: 442.4
     posY: 382.0
     group: Vitimas
@@ -55,16 +63,32 @@ hosts:
 switches:
   s1:
     kind: ovs
+    interfaces:
+      - name: s1-eth0
+      - name: s1-eth1
+      - name: s1-eth2
+      - name: s1-eth3
     group: HackInSDN.com
     posX: 380.0
     posY: 248.4
 
 links:
   - node1: c1
+    intf1: c1-eth0
     node2: s1
+    intf2: s1-eth0
+
   - node1: atacante
+    intf1: atacante-eth0
     node2: s1
+    intf2: s1-eth1
+
   - node1: vitima1
+    intf1: vitima1-eth0
     node2: s1
+    intf2: s1-eth2
+
   - node1: vitima2
+    intf1: vitima2-eth0
     node2: s1
+    intf2: s1-eth3
